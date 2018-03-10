@@ -1,0 +1,60 @@
+<header>
+    <div class="header-container" id="top-view">
+        <!-- <div class="header-tab pull-left" ng-click="showMenu = !showMenu">
+            <span class="toggle-container">
+                <span class="icon">
+                    <i class="material-icons">menu</i>
+                </span>
+            </span>  
+        </div> --> 
+        <a data-ui-sref="dashboard" class="logo pull-left">
+            <img src="../assets/images/cf-logo-color.svg" alt="CF Logo" />
+        </a>
+        <div class="pull-right">
+            <!-- <div class="header-tab pull-left" ng-if="commonData.showSearch">
+                <span class="toggle-container" ng-click="toggleInSearch()" ng-hide="false">
+                    <span class="icon search-icon">
+                        <i class="material-icons">search</i>
+                    </span>
+                </span>
+            </div> -->
+           
+            <div class="header-tab" dropdown auto-close="outsideClick">
+                <span class="toggle-container" dropdown-toggle>
+                    <span class="icon account-icon">
+                        <i class="material-icons">account_circle</i>
+                    </span>
+                </span>
+                <ul class="dropdown-menu" role="menu">
+                    <div class="account-div">
+                        <div class="name-container">
+                            <div class="first-letter"> </div>
+                            <div class="name-mail-container">
+                                <p>[[loginFName | lowercase]]</p>
+                                <p>[[loginEmail | lowercase]]</p>
+                            </div>
+                        </div>
+                        <div class="log-out-container">
+                            <button class="btn pull-right" (click)="logoutFn()">Logout</button>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+           <!--  <div class="header-tab" dropdown auto-close="outsideClick">
+                <span class="toggle-container" dropdown-toggle>
+                    <span class="icon account-icon">
+                        <img src="{{=URL(r=request,c='static',f='newsearchapp/assets/images/9dots.png')}}" alt="CF Logo"  height="28"  width="19" />
+                    </span>
+                </span>
+                <ul class="dropdown-menu" role="menu"> 
+                    {{ include "angular/newsearchapp/common/appscollection.html" }}
+                </ul>
+            </div> -->
+            <div style="position: relative;top: 26px;float: right;cursor: pointer;"> 
+                    <a popover-template="'appscollection.html'" popover-placement="bottom" popover-is-open="commonData.popOverOpen" ng-click="togglePopover()">
+                        <i class="material-icons" style=" color: white;font-size: 28px;margin-top: -2px;">apps</i>
+                    </a> 
+            </div>
+        </div>
+    </div>
+</header>
