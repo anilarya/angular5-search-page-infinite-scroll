@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { HttpModule, Http, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { Routes, RouterModule } from "@angular/router";
+import { LoadingModule } from 'ngx-loading';
+import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module'; 
 import 'rxjs/Rx';
 
 
@@ -12,7 +14,8 @@ import { ProductComponent } from './product/product.component';
 import { MemberComponent } from './member/member.component';
 import { ScrollTracker} from './ScrollTracker.directive';
 import { UtilityService } from './utility.service';
-import { HeaderComponent } from './header/header.component'; 
+import { HeaderComponent } from './header/header.component';
+import { CustomLoaderComponent } from './custom-loader/custom-loader.component'; 
 
 const routes: Routes = [
  { path: 'product', component: ProductComponent },
@@ -27,13 +30,16 @@ const routes: Routes = [
     ProductComponent,
     MemberComponent,
     ScrollTracker,
-    HeaderComponent
+    HeaderComponent,
+    CustomLoaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule, 
-    RouterModule.forRoot(routes, {useHash: true})
+    LoadingModule,
+    NgHttpLoaderModule,
+    RouterModule.forRoot(routes, {useHash: true}),
   ],
   providers: [UtilityService],
   bootstrap: [ AppComponent] 

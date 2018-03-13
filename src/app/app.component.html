@@ -1,65 +1,68 @@
- <app-header> </app-header>
- <div class="subheader">
-	 <h1> Item's list</h1>
- </div>
- <div class="new-search-div">
-			<input id="searchInput" type="text" class="search-text" focus-me="shouldBeOpen"  [(ngModel)]="searchKey"   (keyup)="searchType($event)" placeholder="Search"/>
-			<!-- <i class="material-icons  cancel-icon" (click)="clearSearch()">cancel</i> -->
-	</div>
- <div scrollTracker (scrolled)="updateScrollPos($event)">
-	 <div class="search-content">
-			<ul>
-			[[applications]]
-				<li *ngFor="let app of applications; let i = index" [attr.data-index]="i" class="col-sm-12 search-result-div"> 
-					<div class="col-sm-9 no-padding">
-						<div (click)="goToProfile(app)" class="cursor-pointer">
-							<div class="main-text" *ngIf="app.business_details; else mainApplicant">  [[app.business_details[0].registered_name]]
-							</div>
-							 
-							<ng-template  #mainApplicant>
-								<div class="main-text"> [[ getMainApplicant(app.individual_details).first_name ]]
-								</div>
-							</ng-template>
-						</div>
-
-						<div class="other-info">
-							<div class="value serial-number floating-box">SL  : [[ app.metadata.sl_no ]] 
-							</div>
-							<div class="chip floating-box"> [[ getLoanProductType(app.metadata.product_type) ]]
-							</div>
-						</div><br>
-
-						<div class="other-info">
-											
-								City: <span class="value" *ngIf="app.metadata.app_source_name!='cl_app_form'"> 
-								[[ getOperatingCity(app.address_details) ]]
-								</span>
-								<span class="value" *ngIf="app.metadata.app_source_name=='cl_app_form'"> 
-									[[ getMainApplicantCurrentAddress(app.address_details).city ]]
-								</span>
-								SM: <span class="value"> [[getSmOwner(app.user_pool_details)  ]]</span>
-								T/o: <span class="value">&#x20B9; [[app.turnover ]]</span>
-								Req Amt : <span class="value" *ngIf='app.fund_end_use'>&#x20B9; [[ app.fund_end_use.loan_amount_required ]] </span>
-							</div>
-
-					</div> 
-					<div class="col-sm-3 no-padding pull-right">
-						<div class="date"> [[app.metadata.created_time| date: 'dd MMM yyyy T hh:mm:ss a' ]]
-						</div>
-						<div class="status"> <span class='chip'> [[getAppStatus(app.metadata.status)]] </span></div>
-					</div>
-			</li>
-
-			<li class="col-sm-12 center search-result-div" *ngIf="applications.length == 0">
-							<p class="res-no-data" *ngIf='!loading_auto'><b>Oops! No data found.</b></p>
-				<p class="res-no-data" *ngIf='loading_auto'><b>Searching...</b></p>
-			</li>
-
-			 
-
-			</ul>
+ <div>
+	 <app-header> </app-header>
+	 <div class="subheader">
+		 <h1></h1>
+	 </div>
+	 <div class="new-search-div">
+				<input id="searchInput" type="text" class="search-text" focus-me="shouldBeOpen"  [(ngModel)]="searchKey"   (keyup)="searchType($event)" placeholder="Search"/>
+				<!-- <i class="material-icons  cancel-icon" (click)="clearSearch()">cancel</i> -->
 		</div>
+	 <div scrollTracker (scrolled)="updateScrollPos($event)">
+		<div class="search-content">
+				<ul>
+					[[applications]]
+					<li *ngFor="let app of applications; let i = index" [attr.data-index]="i" class="col-sm-12 search-result-div"> 
+						<div class="col-sm-9 no-padding">
+							<div (click)="goToProfile(app)" class="col-sm-6 cursor-pointer">
+								<div class="main-text" *ngIf="app.business_details; else mainApplicant">  [[app.business_details[0].registered_name]]
+								</div>
+								 
+								<ng-template  #mainApplicant>
+									<div class="main-text"> [[ getMainApplicant(app.individual_details).first_name ]]
+									</div>
+								</ng-template>
+							</div>
 
-		
- </div>
+							<div class="other-info col-sm-12" >
+								<div class="value serial-number floating-box">SL  : [[ app.metadata.sl_no ]] 
+								</div>
+								<div class="chip floating-box"> [[ getLoanProductType(app.metadata.product_type) ]]
+								</div>
+							</div><br>
+
+							<div class="other-info col-sm-12">
+												
+									City: <span class="value" *ngIf="app.metadata.app_source_name!='cl_app_form'"> 
+									[[ getOperatingCity(app.address_details) ]]
+									</span>
+									<span class="value" *ngIf="app.metadata.app_source_name=='cl_app_form'"> 
+										[[ getMainApplicantCurrentAddress(app.address_details).city ]]
+									</span>
+									SM: <span class="value"> [[getSmOwner(app.user_pool_details)  ]]</span>
+									T/o: <span class="value">&#x20B9; [[app.turnover ]]</span>
+									Req Amt : <span class="value" *ngIf='app.fund_end_use'>&#x20B9; [[ app.fund_end_use.loan_amount_required ]] </span>
+								</div>
+
+						</div> 
+						<div class="col-sm-3 no-padding pull-right">
+							<div class="date"> [[app.metadata.created_time| date: 'dd MMM yyyy T hh:mm:ss a' ]]
+							</div>
+							<div class="status"> <span class='chip'> [[getAppStatus(app.metadata.status)]] </span></div>
+						</div>
+					</li>
+
+					<li class="col-sm-12 center search-result-div" *ngIf="applications.length == 0">
+									<p class="res-no-data" *ngIf='!loading_auto'><b>Oops! No data found.</b></p>
+						<p class="res-no-data" *ngIf='loading_auto'><b>Searching...</b></p>
+					</li> 
+				</ul>  
+		</div> 
+	 </div>
+
+	<div class="http-loader" *ngIf="loading_auto">
+		<!-- <app-custom-loader></app-custom-loader> -->
+		 <img class="images" src="../assets/images/loader.gif" alt="CF Logo" />
+	</div>
+
+</div>
 

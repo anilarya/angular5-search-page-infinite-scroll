@@ -3,6 +3,7 @@ import { HttpModule, Http, URLSearchParams, Headers, RequestOptions } from '@ang
 import {ScrollTracker} from './ScrollTracker.directive';
 import { UtilityService } from './utility.service';
 import * as AppConst from './app.const';
+import { Spinkit } from 'ng-http-loader/spinkits'; 
 
 
 
@@ -24,9 +25,11 @@ export class AppComponent implements OnInit{
   	curScrollPos 			= '';
   	endReached 				= ''; 
   	applications 			= [];
-  	loading_auto 			= false;
+  	public loading_auto 			= false;
+    public spinkit    = Spinkit;
   	productTypeSet 			= [];statusSet = [];
   	masterList : any 		= [];
+    isSearchEnd :boolean = false;
   	headers : Headers 		= new Headers();
   	opts: RequestOptions 	= new RequestOptions();
 
@@ -43,7 +46,7 @@ export class AppComponent implements OnInit{
 
   	constructor(private http: Http, private Utility: UtilityService) {
   		this.headers.append('Content-Type', 'application/json');
-		this.headers.append('x-initiator', '19'); 
+		  this.headers.append('x-initiator', '19'); 
 
 	    this.opts.headers = this.headers;
   	}
@@ -126,8 +129,14 @@ export class AppComponent implements OnInit{
 	        res => {
 		        	let data = res.json().response.result;
 		        	for (let i=0; i<data.length; i++){
-					    this.applications.push(data[i]);
-					}
+    					    this.applications.push(data[i]);
+    					}
+
+              if(data.length < 10){
+                 this.isSearchEnd = true;
+              }else{
+                this.isSearchEnd = false;
+              }
 		        	this.loading_auto = false;
 	        },
 	        msg => console.error(`Error: ${msg}`)
@@ -151,12 +160,12 @@ export class AppComponent implements OnInit{
 	    this.curScrollPos 	= e.pos;
 	    this.endReached 	= e.endReached;
 
-	    if(this.endReached){
+	    if(this.endReached && !this.isSearchEnd){
 	    	var _len 	=  this.applications.length -1;
 
             let params 	= { 
                   "page_context": { 
-                    "before"	: this.applications[_len].metadata.last_modified_time,
+                    "before"	: _len >0 ? this.applications[_len].metadata.last_modified_time : "",
                     "limit"		: 11,
                     "sort_order": 1,
                     "sort_param": "updated_time"
