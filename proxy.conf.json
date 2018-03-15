@@ -1,0 +1,7 @@
+{
+  "/cf/": {
+    "target": "http://local.capitalfloat.com:8000",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

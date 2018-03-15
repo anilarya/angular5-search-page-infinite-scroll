@@ -5,6 +5,7 @@ import { HttpModule, Http, URLSearchParams, Headers, RequestOptions } from '@ang
 import { Routes, RouterModule } from "@angular/router";
 import { LoadingModule } from 'ngx-loading';
 import { NgHttpLoaderModule } from 'ng-http-loader/ng-http-loader.module'; 
+import {APP_BASE_HREF} from '@angular/common';
 import 'rxjs/Rx';
 
 
@@ -39,9 +40,9 @@ const routes: Routes = [
     HttpModule, 
     LoadingModule,
     NgHttpLoaderModule,
-    RouterModule.forRoot(routes, {useHash: true}),
+    RouterModule.forRoot(routes, {useHash: false}),
   ],
-  providers: [UtilityService],
+  providers: [UtilityService, {provide: APP_BASE_HREF, useValue: 'search'}],
   bootstrap: [ AppComponent] 
 })
 export class AppModule {  }

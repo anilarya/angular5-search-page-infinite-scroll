@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
   	searchKey 				= '';
   	curScrollPos 			= '';
   	endReached 				= ''; 
-  	applications 			= [];
+  	applications 			= []; 
   	public loading_auto 			= false;
     public spinkit    = Spinkit;
   	productTypeSet 			= [];statusSet = [];
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
     isSearchEnd :boolean = false;
   	headers : Headers 		= new Headers();
   	opts: RequestOptions 	= new RequestOptions();
+    getMerchantList : any  = [];
 
   	params = {
 	        'page_context': {
@@ -192,8 +193,19 @@ export class AppComponent implements OnInit{
         ); 
     } ;
 
+  getList(){
+    let _url = '/cf/cl_merchant/get_merchant_details.json?creater_id=213834'  //`${this.baseUrlAppForm}apps/master_list` ;
+        this.http.get(_url, this.opts).subscribe( 
+           _res => { this.getMerchantList =  _res.json();  
+                   console.error(_res.json());
+          },
+          _msg => {}
+        ); 
+    } ;
+
 	ngOnInit(){
 	     //called after the constructor and called  after the first ngOnChanges() 
 	  	this.getMasterList();
+      this.getList();
 	  }
 }

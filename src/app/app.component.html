@@ -7,10 +7,11 @@
 				<input id="searchInput" type="text" class="search-text" focus-me="shouldBeOpen"  [(ngModel)]="searchKey"   (keyup)="searchType($event)" placeholder="Search"/>
 				<!-- <i class="material-icons  cancel-icon" (click)="clearSearch()">cancel</i> -->
 		</div>
+
+		<!-- [[ ( getMerchantList | json) ]] -->
 	 <div scrollTracker (scrolled)="updateScrollPos($event)">
 		<div class="search-content">
-				<ul>
-					[[applications]]
+				<ul> 
 					<li *ngFor="let app of applications; let i = index" [attr.data-index]="i" class="col-sm-12 search-result-div"> 
 						<div class="col-sm-9 no-padding">
 							<div (click)="goToProfile(app)" class="col-sm-6 cursor-pointer">
@@ -44,7 +45,7 @@
 								</div>
 
 						</div> 
-						<div class="col-sm-3 no-padding pull-right">
+						<div class="col-sm-3 no-padding pull-right align-right">
 							<div class="date"> [[app.metadata.created_time| date: 'dd MMM yyyy T hh:mm:ss a' ]]
 							</div>
 							<div class="status"> <span class='chip'> [[getAppStatus(app.metadata.status)]] </span></div>
